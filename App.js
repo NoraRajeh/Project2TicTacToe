@@ -15,8 +15,9 @@ function App() {
     //app's state variables
     const [board, setBoard] = React.useState(["", "", "", "", "", "", "", "", ""])
     const [turn, setTurn] = React.useState('X')
-    let win;
-    let gameOver = false
+    const [win, setWin] = React.useState()
+    const [gameOver, setGameOver] = React.useState(false);
+
     function handleTurn(event) {
         console.log(event.target, event.target.id)
         let idx = event.target.id
@@ -24,23 +25,42 @@ function App() {
             let newBoard = [...board]
             newBoard[idx] = turn
             setBoard(newBoard)
-            turn = turn === 'X' ? setTurn('O') : setTurn('X')
-            //  win = getWinner() 
-            // render()    
+            setTurn(turn === 'X' ? 'O' : 'X')
+            getWinner(newBoard);
         }
     }
+    function Message() {
+        let msg = gameOver ?
+            win != 'T' ? `${win} wins!` : `That's a tie, queen!`
+            : `It's ${turn}'s turn!`;
+        return <h1>{msg}</h1>
+    }
+    function getWinner(newBoard) {
+        for (const combo of winningCombos) {
+            const [first, second, third] = combo;
+            if (newBoard[first] && newBoard[first] === newBoard[second] && newBoard[first] === newBoard[third]) {
+                setWin(newBoard[first]);
+                setGameOver(true);
+            }
+        }
+        if (newBoard.every(square => square !== "")) {
+            setWin('T');
+            setGameOver(true);
+        }
+    }
+
     return (
         <div>
             <h1>Tic-React-Toe</h1>
-            <h2>It's X's turn!</h2>
+            <Message />
             <div class="flex-container flex-column">
-                <div class="flex-container flex-wrap" id="board" onClick={handleTurn}>
+                <div className="flex-container flex-wrap" id="board" onClick={handleTurn}>
                     {board.map((value, idx) => {
                         return (<div class="square" key={idx} id={idx}>{value}</div>
                         );
                     })}
                 </div>
-                <button id="reset-button">reset</button>
+                <button id="reset-button" onClick={event => { setBoard(["", "", "", "", "", "", "", "", ""]); setWin(null); setTurn('X'); setGameOver(false) }}>reset</button>
             </div>
         </div>
     );
