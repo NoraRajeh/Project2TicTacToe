@@ -12,16 +12,20 @@
     <script defer src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
     <script defer src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <!-- JS link! -->
-    <script defer src="js/main.js" type="text/jsx"></script>
+    <!-- <script defer src="js/main.js" type="text/jsx"></script> -->
+    <!-- APP link! -->
+    <script defer src="App.js" type="text/jsx"></script>
     <!-- A fun title -->
     <title>Empowering Tic Tac Toe for the Good of Humanity</title>
 </head>
 
 <body>
     <div id="root"></div>
-    <h1>Tic-Tac-Toe</h1>
+    <script type="text/jsx">
+        ReactDOM.render(<App />, root);
+    </script>
+    <!-- <h1>Tic-Tac-Toe</h1>
     <h2>It's X's turn!</h2>
-
     <div class="flex-container flex-column">
         <div class="flex-container flex-wrap" id="board">
             <div class="square"></div>
@@ -35,15 +39,7 @@
             <div class="square"></div>
         </div>
         <button id="reset-button">reset</button>
-    </div>
+    </div> -->
 </body>
 
 </html>
-
-
-
-
-
-
-
-</html>>
